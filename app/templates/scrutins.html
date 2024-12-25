@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Gestion des Scrutins{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center; color: #007BFF;">Gestion des Scrutins</h1>
+
+{% if success %}
+<div style="background-color: #d4edda; color: #155724; padding: 10px; margin: 20px auto; max-width: 600px; border: 1px solid #c3e6cb; border-radius: 5px;">
+    <p>Le scrutin a été créé avec succès !</p>
+</div>
+{% endif %}
+
+<div style="margin: 20px auto; max-width: 600px; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
+    <h2 style="text-align: center;">Créer un Nouveau Scrutin</h2>
+    <form action="/scrutins" method="post" id="scrutin-form">
+        <!-- Question -->
+        <div style="margin-bottom: 15px;">
+            <label for="question" style="display: block; font-weight: bold;">Question :</label>
+            <input type="text" id="question" name="question" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+
+        <!-- Options -->
+        <div style="margin-bottom: 15px;">
+            <label style="font-weight: bold;">Options :</label>
+            <div id="options-container">
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <input type="text" name="options[]" required placeholder="Option 1" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <button type="button" onclick="removeOption(this)" style="margin-left: 10px; padding: 5px 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px;">−</button>
+                </div>
+            </div>
+            <button type="button" onclick="addOption()" style="margin-top: 10px; padding: 5px 10px; background-color: #28a745; color: white; border: none; border-radius: 5px;">Ajouter une option</button>
+        </div>
+
+        <!-- Dates -->
+        <div style="margin-bottom: 15px;">
+            <label for="start_date" style="display: block; font-weight: bold;">Date de Début :</label>
+            <input type="date" id="start_date" name="start_date" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="end_date" style="display: block; font-weight: bold;">Date de Fin :</label>
+            <input type="date" id="end_date" name="end_date" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; font-size: 16px;">Créer</button>
+    </form>
+</div>
+
+<h2 style="text-align: center; margin-top: 30px;">Scrutins Existants</h2>
+<ul style="list-style: none; padding: 0; margin: 20px auto; max-width: 600px;">
+    {% for scrutin in scrutins %}
+    <li style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
+        <strong>{{ scrutin.question }}</strong>
+        <p>Date : Du {{ scrutin.start_date }} au {{ scrutin.end_date }}</p>
+        <p>Options :</p>
+        <ul>
+            {% for option in scrutin.options %}
+            <li>{{ option }}</li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+<script>
+    // Ajouter une nouvelle option
+    function addOption() {
+        const container = document.getElementById("options-container");
+        const optionCount = container.children.length + 1;
+
+        const optionDiv = document.createElement("div");
+        optionDiv.style.display = "flex";
+        optionDiv.style.alignItems = "center";
+        optionDiv.style.marginBottom = "10px";
+
+        optionDiv.innerHTML = `
+            <input type="text" name="options[]" required placeholder="Option ${optionCount}" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            <button type="button" onclick="removeOption(this)" style="margin-left: 10px; padding: 5px 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px;">−</button>
+        `;
+
+        container.appendChild(optionDiv);
+    }
+
+    // Retirer une option
+    function removeOption(button) {
+        const container = document.getElementById("options-container");
+        container.removeChild(button.parentElement);
+    }
+</script>

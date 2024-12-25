@@ -1,0 +1,34 @@
+# Python specific
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+*.venv
+.env
+venv/
+
+# Flask specific
+instance/
+*.db
+*.sqlite3
+
+# Logs
+logs/
+*.log
+*.out
+*.err
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Other
+*.bak
+*.tmp
+*.old
