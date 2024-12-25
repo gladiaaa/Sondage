@@ -37,3 +37,5 @@ for collection_name, data in collections.items():
         collection.insert_many(data)
 
 print(f"Base de données '{db_name}' et collections créées avec succès !")
+
+# faire la commande "python setup_db.py" pour créer la bdd
