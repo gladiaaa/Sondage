@@ -2,6 +2,7 @@ from flask import Flask
 from flask_pymongo import PyMongo
 from flask_login import LoginManager, AnonymousUserMixin
 
+# Initialisation de PyMongo et Flask-Login
 mongo = PyMongo()
 login_manager = LoginManager()
 
@@ -24,7 +25,7 @@ class Visitor(AnonymousUserMixin):
     def is_anonymous(self):
         return True
 
-# Initialisation de l'application Flask
+# Création de l'application Flask
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "votre_clé_secrète"

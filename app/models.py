@@ -1,7 +1,6 @@
 from bson.objectid import ObjectId
 from flask_login import UserMixin
-from flask import current_app
-from app.models import mongo
+from app import mongo
 
 # Modèle pour les utilisateurs
 class User(UserMixin):
