@@ -10,18 +10,16 @@
 
 <body>
     <nav>
-        <ul>
-            <li><a href="/">Accueil</a></li>
-            {% if current_user.is_authenticated %}
-            <li><a href="/scrutins">Mes Scrutins</a></li>
-            <li><a href="/logout">Se déconnecter</a></li>
-            {% else %}
-            <li><a href="/login">Se connecter</a></li>
-            <li><a href="/register">S'inscrire</a></li>
-            {% endif %}
-        </ul>
+        {% if current_user.is_authenticated %}
+            <p>Bienvenue, {{ current_user.username }} !</p>
+            <a href="{{ url_for('routes.logout') }}">Se déconnecter</a>
+        {% else %}
+            <p>Bienvenue, {{ current_user.username }} !</p>
+            <a href="{{ url_for('routes.login') }}">Se connecter</a>
+            <a href="{{ url_for('routes.register') }}">S'inscrire</a>
+        {% endif %}
     </nav>
-
+    
     <main>
         {% block content %}{% endblock %}
     </main>

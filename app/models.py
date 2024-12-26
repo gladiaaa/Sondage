@@ -1,33 +1,56 @@
+from bson.objectid import ObjectId
 from flask_login import UserMixin
+from flask import current_app
+from app.models import mongo
 
+# Modèle pour les utilisateurs
 class User(UserMixin):
-    def __init__(self, user_data):
-        self.id = str(user_data["_id"])  # Convertir ObjectId en chaîne
-        self.pseudo = user_data["pseudo"]
-        self.email = user_data["email"]
-        self.role = user_data["role"]
-        self.status = user_data["status"]
+    def __init__(self, data):
+        self.id = str(data.get("_id"))
+        self.username = data.get("username")
+        self.email = data.get("email")
+        self.password = data.get("password")
+        self.is_admin = data.get("is_admin", False)
 
-    # Ajouter des propriétés personnalisées si nécessaire
-    def is_admin(self):
-        return self.role == "admin"
+    @staticmethod
+    def get(user_id):
+        user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+        return User(user) if user else None
 
-    def is_creator(self):
-        return self.role == "creator"
+    @staticmethod
+    def get_by_email(email):
+        user = mongo.db.users.find_one({"email": email})
+        return User(user) if user else None
 
-def get_scrutin_model(question, options, start_date, end_date):
-    return {
-        "question": question,
-        "options": options,  # Liste des options possibles
-        "start_date": start_date,
-        "end_date": end_date,
-        "votes": [],  # Liste des votes effectués
-        "status": "pending"  # pending, open, closed
-    }
+    @staticmethod
+    def create(username, email, password, is_admin=False):
+        mongo.db.users.insert_one({
+            "username": username,
+            "email": email,
+            "password": password,
+            "is_admin": is_admin
+        })
 
-def get_user_model(pseudo, personal_info):
-    return {
-        "pseudo": pseudo,
-        "personal_info": personal_info,
-        "status": "active"  # active, closed
-    }
+# Modèle pour les scrutins
+class Scrutin:
+    @staticmethod
+    def create(question, options, start_date, end_date, creator_id):
+        mongo.db.scrutins.insert_one({
+            "question": question,
+            "options": options,
+            "start_date": start_date,
+            "end_date": end_date,
+            "creator_id": creator_id
+        })
+
+    @staticmethod
+    def get_all():
+        return list(mongo.db.scrutins.find())
+
+    @staticmethod
+    def get(scrutin_id):
+        return mongo.db.scrutins.find_one({"_id": ObjectId(scrutin_id)})
+
+    @staticmethod
+    def delete(scrutin_id):
+        mongo.db.scrutins.delete_one({"_id": ObjectId(scrutin_id)})
