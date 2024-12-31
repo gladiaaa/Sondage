@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Accueil{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h1 class="display-5 fw-bold">Bienvenue sur Sondage Pro</h1>
+    <p class="lead text-muted">Organisez des scrutins professionnels et analysez vos résultats en toute simplicité.</p>
+</div>
+
+<div class="row mt-5">
+    <div class="col-lg-6 mb-4">
+        <h3 class="text-primary mb-3">Derniers scrutins créés</h3>
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for poll in recent_polls %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ poll['question'] }}
+                        <a href="/poll/{{ poll['_id'] }}" class="btn btn-sm btn-primary">Voir</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <h3 class="text-success mb-3">Scrutins actifs</h3>
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for poll in active_polls %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ poll['question'] }}
+                        <a href="/poll/{{ poll['_id'] }}" class="btn btn-sm btn-success">Participer</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
