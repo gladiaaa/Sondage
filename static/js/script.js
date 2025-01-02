@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const optionsContainer = document.getElementById("options-container");
     const addOptionButton = document.getElementById("add-option");
 
-    // Ajouter une nouvelle ligne d'option
+  
     addOptionButton.addEventListener("click", () => {
         const optionRow = document.createElement("div");
         optionRow.classList.add("option-row");
@@ -14,13 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         optionsContainer.appendChild(optionRow);
 
-        // Ajouter un gestionnaire d'événements au bouton "Supprimer"
+
         optionRow.querySelector(".remove-option").addEventListener("click", () => {
             optionRow.remove();
         });
     });
 
-    // Supprimer une ligne d'option existante
+
     optionsContainer.addEventListener("click", (event) => {
         if (event.target.classList.contains("remove-option")) {
             event.target.closest(".option-row").remove();
