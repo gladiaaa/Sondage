@@ -67,4 +67,35 @@
     <p class="text-muted">Aucun utilisateur trouvé.</p>
     {% endif %}
 </div>
+{% extends "base.html" %}
+{% block title %}Administration{% endblock %}
+{% block content %}
+<h1 class="text-center">Tableau de bord</h1>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h3>Total utilisateurs</h3>
+                <p class="display-4">{{ total_users }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h3>Scrutins actifs</h3>
+                <p class="display-4">{{ active_polls }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h3>Scrutins clôturés</h3>
+                <p class="display-4">{{ closed_polls }}</p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

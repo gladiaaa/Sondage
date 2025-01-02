@@ -1,16 +1,28 @@
 {% extends "base.html" %}
 {% block title %}Créer un scrutin{% endblock %}
 {% block content %}
-<h1 class="text-center mb-4">Créer un nouveau scrutin</h1>
+<h1 class="text-center text-primary mb-4">Créer un nouveau scrutin</h1>
 <form method="POST" class="mx-auto" style="max-width: 600px;">
     <div class="mb-3">
         <label for="question" class="form-label">Question :</label>
-        <input type="text" name="question" id="question" class="form-control" required>
+        <input type="text" name="question" id="question" class="form-control" placeholder="Quelle est votre couleur préférée ?" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description :</label>
+        <textarea name="description" id="description" class="form-control" rows="3" placeholder="Ajoutez une description..."></textarea>
     </div>
     <div class="mb-3">
         <label for="options" class="form-label">Options (séparées par des virgules) :</label>
-        <input type="text" name="options" id="options" class="form-control" required>
+        <input type="text" name="options" id="options" class="form-control" placeholder="Option 1, Option 2, Option 3" required>
     </div>
-    <button type="submit" class="btn btn-success w-100">Créer</button>
+    <div class="mb-3">
+        <label for="start_date" class="form-label">Date de début :</label>
+        <input type="date" name="start_date" id="start_date" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="end_date" class="form-label">Date de fin :</label>
+        <input type="date" name="end_date" id="end_date" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Créer</button>
 </form>
 {% endblock %}
