@@ -1,13 +1,13 @@
 from pymongo import MongoClient
 
-# Connexion à MongoDB
+
 client = MongoClient("mongodb://localhost:27017/")
 
-# Nom de la base de données
+
 db_name = "sondage"
 db = client[db_name]
 
-# Création collections nécessaires
+
 collections = {
     "users": [
         {"username": "admin", "email": "admin@example.com", "password": "hashed_password", "is_admin": True},
